@@ -1,0 +1,32 @@
+.Board {
+    background-color: blue;
+    width: auto;
+    position: relative;
+    display:inline-block;
+    margin-top: 2em;
+}
+
+.Board.Winner-Player1 {
+    background-color: yellow;
+}
+
+.Board.Winner-Player2 {
+    background-color: red;
+}
+.Segment {
+    display: inline-block;
+    min-width: 4em;
+    min-height: 4em;
+    border-radius: 3em;
+    background-color: white;
+    margin: 0.5em;
+    border: solid 2px;
+}
+
+.Segment.Player1 {
+    background-color: yellow;
+}
+
+.Segment.Player2 {
+    background-color: red;
+}
