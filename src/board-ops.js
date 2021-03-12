@@ -27,7 +27,6 @@
     const across = direction === 'right' ? 1 : -1;
     let count = 0;
     for(let i = row, j = col; i < rows && j < columns; i++, j+= across) {
-      console.log(row, col, i, j, count, direction);
       if (board[i][j] !== EMPTY && board[i][j] === board[Math.max(0, i - 1)][Math.max(0, j - across)]) count++;
       else count = 0;
       if (count >= 3) return true;
