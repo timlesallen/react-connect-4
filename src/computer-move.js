@@ -27,7 +27,6 @@ function minimax (board, depth, maximizingPlayer) {
 
   if (terminal || depth === 0) {
     const _badness = badness(board, depth, !maximizingPlayer, terminal);
-    // console.log('terminate', { terminal, depth, maximizingPlayer, badness: _badness });
     return { board, badness: _badness };
   }
   const moves = Array(columns)
@@ -38,11 +37,7 @@ function minimax (board, depth, maximizingPlayer) {
     // discount future moves so we prefer connect 4 sooner
     .map(({ board, column, badness }) => ({ board, column, badness: badness * 0.9999 })); 
 
-  // if (depth === MAX_DEPTH) console.log(moves);
-  let interesting = false;
-  if (moves.some(({ badness }) => badness)) interesting = true;
   const result = minMax(moves, ({ badness }) => badness);
-  // if (interesting) console.log('==>', { maximizingPlayer, depth, moves, result });
   return result;
 }
 
