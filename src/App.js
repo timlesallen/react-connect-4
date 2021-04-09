@@ -1,15 +1,15 @@
-import Board from './Board'
+import Board from './Board';
 import './App.css';
 
-function App() {
+function App () {
   return (
-    <div className="App">
-      <header className="App-header">
+    <div className='App'>
+      <header className='App-header'>
         <p>
           Connect 4
         </p>
       </header>
-    <Board />
+      <Board />
     </div>
   );
 }
