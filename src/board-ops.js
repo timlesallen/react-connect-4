@@ -47,9 +47,12 @@ function isConnect4 (board) {
   // horizontal
   for (let i = 0; i < rows; i++) {
     for (let j = 0; j < columns; j++) {
-      if (board[i][j] !== EMPTY && board[i][j] === board[i][Math.max(0, j - 1)]) count++;
-      else count = 0;
-      if (count >= 3) return true;
+      if (j > 0 && board[i][j] !== EMPTY && board[i][j] === board[i][j - 1]){
+        count++;
+      } else count = 0;
+      if (count >= 3) {
+        return true;
+      }
     }
   }
 
@@ -57,7 +60,7 @@ function isConnect4 (board) {
   count = 0;
   for (let j = 0; j < columns; j++) {
     for (let i = 0; i < rows; i++) {
-      if (board[i][j] !== EMPTY && board[i][j] === board[Math.max(0, i - 1)][j]) count++;
+      if (i > 0 && board[i][j] !== EMPTY && board[i][j] === board[i - 1][j]) count++;
       else count = 0;
       if (count >= 3) return true;
     }
