@@ -1,4 +1,4 @@
-import { isConnect4 } from './board-ops';
+import { isConnect4, performMove } from './board-ops';
 
 test('finds connect 4', () => {
   const horizontal = [
@@ -74,4 +74,16 @@ test('finds connect 4', () => {
   expect(isConnect4(lowerLHSDiagonal)).toBe(true);
   expect(isConnect4(lowerRHSDiagonal)).toBe(true);
   expect(isConnect4(weird)).toBe(false);
+});
+
+test('performMove()', () => {
+  const board = [
+    [2, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0],
+    [1, 0, 0, 0, 0, 0, 0],
+    [2, 0, 0, 2, 1, 1, 2],
+    [2, 0, 0, 2, 1, 2, 1],
+    [1, 2, 1, 2, 1, 1, 1]
+  ];
+  expect(performMove(board)).toBe(false);
 });

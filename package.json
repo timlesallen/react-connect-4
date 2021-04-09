@@ -6,6 +6,8 @@
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
+    "lodash.maxby": "^4.6.0",
+    "lodash.minby": "^4.6.0",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",
@@ -40,8 +42,8 @@
     "semistandard": "^16.0.0"
   },
   "semistandard": {
-    "globals": [
-      "expect"
+    "env": [
+      "jest"
     ]
   }
 }

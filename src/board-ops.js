@@ -10,13 +10,18 @@ function aboveEmpty (board, row, column) {
 }
 
 function performMove (prevBoard, column, player) {
+  let canMove = false;
   const board = prevBoard.map((row, i) => {
     return row.map((segment, j) => {
       if (segment !== EMPTY) return segment;
-      if (j === column && !aboveEmpty(prevBoard, i, j)) return player;
+      if (j === column && !aboveEmpty(prevBoard, i, j)) {
+        canMove = true;
+        return player;
+      }
       return segment;
     });
   });
+  if (!canMove) return false;
   return board;
 }
 
