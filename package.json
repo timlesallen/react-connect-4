@@ -40,9 +40,6 @@
     "semistandard": "^16.0.0"
   },
   "semistandard": {
-    "env": [
-      "mocha"
-    ],
     "globals": ["expect"]
   }
 }
