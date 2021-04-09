@@ -4,7 +4,7 @@ import minBy from 'lodash.minby';
 
 const reallyGood = 1;
 const reallyBad = -1;
-const MAX_DEPTH = 3;
+const MAX_DEPTH = 5;
 
 function computerMove (board) {
   const result = minimax(board, MAX_DEPTH, true);
