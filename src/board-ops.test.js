@@ -57,6 +57,14 @@ test('finds connect 4', () => {
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0]
   ];
+  const notDiagonal2 = [
+    [0, 0, 0, 0, 0, 0, 1],
+    [0, 0, 0, 0, 0, 1, 0],
+    [0, 0, 0, 0, 1, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0],
+    [0, 0, 0, 0, 0, 0, 0]
+  ];
   const lowerLHSDiagonal = [
     [0, 0, 0, 0, 0, 0, 0],
     [0, 0, 0, 0, 0, 0, 0],
@@ -97,6 +105,7 @@ test('finds connect 4', () => {
   expect(isConnect4(diagonal)).toBe(true);
   expect(isConnect4(otherDiagonal)).toBe(true);
   expect(isConnect4(notDiagonal)).toBe(false);
+  expect(isConnect4(notDiagonal2)).toBe(false);
   expect(isConnect4(lowerLHSDiagonal)).toBe(true);
   expect(isConnect4(lowerRHSDiagonal)).toBe(true);
   expect(isConnect4(weird)).toBe(false);
