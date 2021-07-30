@@ -31,8 +31,10 @@ function hasDiagonal (board, row, col, direction) {
 
   const across = direction === 'right' ? 1 : -1;
   let count = 0;
+  // move from top to bottom, going either left or right (depending on 'direction')
   for (let i = row, j = col; i < rows && j < columns; i++, j += across) {
-    if (i > 0 && board[i][j] !== EMPTY && board[i][j] === board[Math.max(0, i - 1)][Math.max(0, j - across)]) count++;
+    const not_edge = i > 0 && ((direction === 'left' && j < columns - 1) || (j > 0 && direction === 'right'));
+    if (not_edge && board[i][j] !== EMPTY && board[i][j] === board[Math.max(0, i - 1)][Math.max(0, j - across)]) count++;
     else count = 0;
     if (count >= 3) {
       return true;
@@ -83,7 +85,7 @@ function isConnect4 (board) {
   for (let j = columns; j >= 3; j--) {
     if (hasDiagonal(board, 0, j, 'left')) return true;
   }
-  // diagonal to the left, searchng down RHS column
+  // diagonal to the left, searching down RHS column
   count = 0;
   for (let i = 0; i < rows - 3; i++) {
     if (hasDiagonal(board, i, columns - 1, 'left')) return true;
