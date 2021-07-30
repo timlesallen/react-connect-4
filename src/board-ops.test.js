@@ -97,6 +97,14 @@ test('finds connect 4', () => {
     [2, 2, 2, 1, 1, 1, 0],
     [2, 1, 1, 1, 2, 1, 0]
   ];
+  const danny = [
+    [1, 0, 0, 0, 0, 0, 0],
+    [2, 0, 0, 0, 0, 0, 0],
+    [2, 0, 0, 0, 0, 0, 0],
+    [2, 2, 0, 0, 0, 0, 0],
+    [1, 1, 2, 0, 0, 0, 0],
+    [2, 1, 1, 1, 0, 0, 0]
+  ];
   expect(isConnect4(horizontal)).toBe(true);
   expect(isConnect4(notHorizontal)).toBe(false);
   expect(isConnect4(vertical)).toBe(true);
@@ -110,6 +118,7 @@ test('finds connect 4', () => {
   expect(isConnect4(lowerRHSDiagonal)).toBe(true);
   expect(isConnect4(weird)).toBe(false);
   expect(isConnect4(moreWeird)).toBe(false);
+  expect(isConnect4(danny)).toBe(false);
 });
 
 test('performMove()', () => {
