@@ -1,7 +1,8 @@
-import React from 'react';
-import computerMove from './computer-move';
-import { isConnect4, performMove } from './board-ops';
 import './Board.css';
+import React, { useState } from 'react';
+import computerMove from './computer-move';
+import pipe from 'ramda.pipe';
+import { isConnect4, performMove } from './board-ops';
 
 // Board dimensions
 const COLS = 7;
@@ -25,18 +26,18 @@ const segmentClass = (segment) => {
   }
 };
 
+const initialBoardState = () => ({
+  board: new Array(ROWS)
+  .fill(EMPTY)
+  .map(() => new Array(COLS).fill(EMPTY)),
+  winner: false
+});
+
 /**
- * @class
  * A react component to represent the board
  */
-class Board extends React.Component {
-  constructor (props) {
-    super(props);
-    this.state = {
-      board: new Array(ROWS).fill(EMPTY).map(() => new Array(COLS).fill(EMPTY))
-    };
-    this.handleClick = this.handleClick.bind(this);
-  }
+function Board () {
+  const [ boardState, setBoardState ] = useState(initialBoardState);
 
   /**
    * Event handler for a click on the board.
@@ -44,37 +45,35 @@ class Board extends React.Component {
    * performs the next computer move.
    * @param {integer} column clicked
    */
-  handleClick (column) {
-    this.setState(({ board }) => {
-      const board1 = performMove(board, column, PLAYER1);
-      if (isConnect4(board1)) return { board: board1, winner: PLAYER1 };
-      const board2 = performMove(board1, computerMove(board1), PLAYER2);
-      if (isConnect4(board2)) return { board: board2, winner: PLAYER2 };
-      console.log({ board2 });
-      return { board: board2 };
-    });
+  function handleClick (column) {
+    setBoardState(pipe(
+       ({ board }) => ({ board: performMove(board, column, PLAYER1) }),
+       ({ board }) => ({ board, winner: isConnect4(board) && PLAYER1 }),
+       ({ board, winner }) => {
+         if (winner) return { board, winner }; // PLAYER 1 just won
+         const board2 = performMove(board, computerMove(board), PLAYER2);
+         return { board: board2, winner: isConnect4(board2) && PLAYER2 };
+       }));
   }
 
-  render () {
-    const drawSegment = (segment, column) => {
-      return (
-        <div key={column.toString()} className={`Segment ${segmentClass(segment)}`} onClick={this.handleClick.bind(this, column)} />
-      );
-    };
-    const drawRow = (row, index) => {
-      return (
-        <div key={index.toString()} className='Row'>
-          {row.map((segment, column) => drawSegment(segment, column))}
-        </div>
-      );
-    };
-    const winnerClass = this.state.winner > 0 ? `Winner-Player${this.state.winner}` : '';
+  const drawSegment = (segment, column) => {
     return (
-      <div className={`Board ${winnerClass}`}>
-        {this.state.board.map((row, index) => drawRow(row, index))}
+      <div key={column.toString()} className={`Segment ${segmentClass(segment)}`} onClick={handleClick.bind(null, column)} />
+    );
+  };
+  const drawRow = (row, index) => {
+    return (
+      <div key={index.toString()} className='Row'>
+        {row.map((segment, column) => drawSegment(segment, column))}
       </div>
     );
-  }
+  };
+  const winnerClass = boardState.winner > 0 ? `Winner-Player${boardState.winner}` : '';
+  return (
+    <div className={`Board ${winnerClass}`}>
+      {boardState.board.map((row, index) => drawRow(row, index))}
+    </div>
+  );
 }
 
 export default Board;

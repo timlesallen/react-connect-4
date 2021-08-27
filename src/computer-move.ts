@@ -9,7 +9,6 @@ const MAX_DEPTH = 5;
 
 function computerMove (board: number[][]) {
   const result = minimax(board, MAX_DEPTH, true);
-  console.log(result);
   const { column } = result;
   return column;
 }
