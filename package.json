@@ -8,7 +8,6 @@
     "@testing-library/user-event": "^12.1.10",
     "lodash.maxby": "^4.6.0",
     "lodash.minby": "^4.6.0",
-    "ramda.pipe": "^0.26.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "react-scripts": "4.0.3",

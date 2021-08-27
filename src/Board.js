@@ -1,7 +1,6 @@
 import './Board.css';
-import React, { useState } from 'react';
+import React, { useReducer } from 'react';
 import computerMove from './computer-move';
-import pipe from 'ramda.pipe';
 import { isConnect4, performMove } from './board-ops';
 
 // Board dimensions
@@ -33,11 +32,25 @@ const initialBoardState = () => ({
   winner: false
 });
 
+function reducer (state, action) {
+  const { board } = state;
+  const { type, column, player } = action;
+  switch (type) {
+    case 'move':
+      const newBoard = performMove(board, column, player)
+      return { board: newBoard, winner: isConnect4(newBoard) && player, lastPlayer: player };
+    default: throw new Error(`unknown action ${action.type}`)
+  }
+}
+
 /**
  * A react component to represent the board
  */
 function Board () {
-  const [ boardState, setBoardState ] = useState(initialBoardState);
+  const [boardState, dispatch] = useReducer(reducer, null, initialBoardState);
+  if (!boardState.winner && boardState.lastPlayer === PLAYER1) {
+    dispatch({ type: 'move', column: computerMove(boardState.board), player: PLAYER2 });
+  }
 
   /**
    * Event handler for a click on the board.
@@ -46,19 +59,12 @@ function Board () {
    * @param {integer} column clicked
    */
   function handleClick (column) {
-    setBoardState(pipe(
-       ({ board }) => ({ board: performMove(board, column, PLAYER1) }),
-       ({ board }) => ({ board, winner: isConnect4(board) && PLAYER1 }),
-       ({ board, winner }) => {
-         if (winner) return { board, winner }; // PLAYER 1 just won
-         const board2 = performMove(board, computerMove(board), PLAYER2);
-         return { board: board2, winner: isConnect4(board2) && PLAYER2 };
-       }));
+    dispatch({ type: 'move', column, player: PLAYER1 });
   }
 
   const drawSegment = (segment, column) => {
     return (
-      <div key={column.toString()} className={`Segment ${segmentClass(segment)}`} onClick={handleClick.bind(null, column)} />
+      <div key={column.toString()} className={`Segment ${segmentClass(segment)}`} onClick={() => handleClick(column)} />
     );
   };
   const drawRow = (row, index) => {
