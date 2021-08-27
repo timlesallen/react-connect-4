@@ -7,11 +7,10 @@ const reallyGood = 1;
 const reallyBad = -1;
 const MAX_DEPTH = 5;
 
-function computerMove (board: number[][]) {
+function computerMove (board: number[][]): number {
   const result = minimax(board, MAX_DEPTH, true);
-  console.log(result);
   const { column } = result;
-  return column;
+  return column as number; // should never get an undefined column out of miniMax
 }
 
 /**
@@ -33,7 +32,7 @@ function minimax (board: number[][], depth: number, maximizingPlayer: boolean): 
   const moves = Array(columns)
     .fill(null)
     .map((_, idx) => ({ board: performMove(board, idx, maximizingPlayer ? 2 : 1), column: idx }))
-    .filter(({ board }) => board !== false)
+    .filter((move): move is { board: number[][], column: number } => move.board !== false)
     .map(({ column, board }) => ({ ...minimax(board, depth - 1, !maximizingPlayer), column }))
     // discount future moves so we prefer connect 4 sooner
     .map(({ board, column, badness }) => ({ board, column, badness: badness * 0.9999 })); 

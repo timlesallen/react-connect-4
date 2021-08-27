@@ -42,6 +42,7 @@
   "devDependencies": {
     "@types/lodash.maxby": "^4.6.6",
     "@types/lodash.minby": "^4.6.6",
+    "@types/react": "^17.0.19",
     "semistandard": "^16.0.0"
   },
   "semistandard": {
