@@ -32,7 +32,7 @@ function minimax (board: number[][], depth: number, maximizingPlayer: boolean): 
   const moves = Array(columns)
     .fill(null)
     .map((_, idx) => ({ board: performMove(board, idx, maximizingPlayer ? 2 : 1), column: idx }))
-    .filter(({ board }) => board !== false)
+    .filter((move): move is { board: number[][], column: number } => move.board !== false)
     .map(({ column, board }) => ({ ...minimax(board, depth - 1, !maximizingPlayer), column }))
     // discount future moves so we prefer connect 4 sooner
     .map(({ board, column, badness }) => ({ board, column, badness: badness * 0.9999 })); 

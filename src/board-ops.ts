@@ -1,15 +1,15 @@
 const EMPTY = 0;
 
-function nextDown (board, row, column) {
+function nextDown (board: number[][], row: number, column: number) {
   const rows = board.length;
   return row === rows - 1 ? undefined : board[row + 1][column];
 }
 
-function aboveEmpty (board, row, column) {
+function aboveEmpty (board: number[][], row: number, column: number) {
   return nextDown(board, row, column) === EMPTY;
 }
 
-function performMove (prevBoard, column, player) {
+function performMove (prevBoard: number[][], column: number, player: number): number[][] | false {
   let canMove = false;
   const board = prevBoard.map((row, i) => {
     return row.map((segment, j) => {
@@ -25,7 +25,7 @@ function performMove (prevBoard, column, player) {
   return board;
 }
 
-function hasDiagonal (board, row, col, direction) {
+function hasDiagonal (board: number[][], row: number, col: number, direction: string) {
   const rows = board.length;
   const columns = board[0].length;
 
@@ -43,7 +43,7 @@ function hasDiagonal (board, row, col, direction) {
   return false;
 }
 
-function isConnect4 (board) {
+function isConnect4 (board: number[][]) {
   const rows = board.length;
   const columns = board[0].length;
 
