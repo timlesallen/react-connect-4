@@ -27,8 +27,8 @@ const segmentClass = (segment) => {
 
 const initialBoardState = () => ({
   board: new Array(ROWS)
-  .fill(EMPTY)
-  .map(() => new Array(COLS).fill(EMPTY)),
+    .fill(EMPTY)
+    .map(() => new Array(COLS).fill(EMPTY)),
   winner: false
 });
 
