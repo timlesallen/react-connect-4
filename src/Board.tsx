@@ -1,7 +1,9 @@
 import './Board.css';
-import { useEffect, useReducer } from 'react';
+import assert from 'assert';
 import computerMove from './computer-move';
+import { isAssertionExpression } from 'typescript';
 import { isConnect4, performMove } from './board-ops';
+import { useEffect, useReducer } from 'react';
 
 // Board dimensions
 const COLS = 7;
@@ -17,7 +19,7 @@ const PLAYER2 = 2;
  * @param {integer} segment
  * @returns {string} CSS class name
  */
-const segmentClass = (segment) => {
+const segmentClass = (segment: number) => {
   switch (segment) {
     case PLAYER1: return 'Player1';
     case PLAYER2: return 'Player2';
@@ -25,19 +27,33 @@ const segmentClass = (segment) => {
   }
 };
 
-const initialBoardState = () => ({
+const initialBoardState = (): state => ({
   board: new Array(ROWS)
     .fill(EMPTY)
     .map(() => new Array(COLS).fill(EMPTY)),
-  winner: false
+  lastPlayer: false,
+  winner: false 
 });
 
-function reducer (state, action) {
+type state = {
+  board: number[][],
+  winner: number | false,
+  lastPlayer: number | false
+}
+
+type action = {
+  type: string,
+  column: number,
+  player: number
+}
+
+function reducer (state: state, action: action): state {
   const { board } = state;
   const { type, column, player } = action;
   switch (type) {
     case 'move':
-      const newBoard = performMove(board, column, player)
+      const newBoard = performMove(board, column, player);
+      assert(newBoard);
       return { board: newBoard, winner: isConnect4(newBoard) && player, lastPlayer: player };
     default: throw new Error(`unknown action ${type}`)
   }
@@ -47,7 +63,7 @@ function reducer (state, action) {
  * A react component to represent the board
  */
 function Board () {
-  const [ boardState, dispatch ] = useReducer(reducer, null, initialBoardState);
+  const [ boardState, dispatch ] = useReducer(reducer, undefined, initialBoardState);
   useEffect(() => {
     if (!boardState.winner && boardState.lastPlayer === PLAYER1) {
       dispatch({ type: 'move', column: computerMove(boardState.board), player: PLAYER2 });
@@ -60,16 +76,16 @@ function Board () {
    * performs the next computer move.
    * @param {integer} column clicked
    */
-  function handleClick (column) {
+  function handleClick (column: number) {
     dispatch({ type: 'move', column, player: PLAYER1 });
   }
 
-  const drawSegment = (segment, column) => {
+  const drawSegment = (segment: number, column: number) => {
     return (
       <div key={column.toString()} className={`Segment ${segmentClass(segment)}`} onClick={() => handleClick(column)} />
     );
   };
-  const drawRow = (row, index) => {
+  const drawRow = (row: number[], index: number) => {
     return (
       <div key={index.toString()} className='Row'>
         {row.map((segment, column) => drawSegment(segment, column))}

@@ -7,10 +7,10 @@ const reallyGood = 1;
 const reallyBad = -1;
 const MAX_DEPTH = 5;
 
-function computerMove (board: number[][]) {
+function computerMove (board: number[][]): number {
   const result = minimax(board, MAX_DEPTH, true);
   const { column } = result;
-  return column;
+  return column as number; // should never get an undefined column out of miniMax
 }
 
 /**
