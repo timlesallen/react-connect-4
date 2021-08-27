@@ -1,5 +1,5 @@
 import './Board.css';
-import React, { useReducer } from 'react';
+import { useEffect, useReducer } from 'react';
 import computerMove from './computer-move';
 import { isConnect4, performMove } from './board-ops';
 
@@ -39,7 +39,7 @@ function reducer (state, action) {
     case 'move':
       const newBoard = performMove(board, column, player)
       return { board: newBoard, winner: isConnect4(newBoard) && player, lastPlayer: player };
-    default: throw new Error(`unknown action ${action.type}`)
+    default: throw new Error(`unknown action ${type}`)
   }
 }
 
@@ -47,10 +47,12 @@ function reducer (state, action) {
  * A react component to represent the board
  */
 function Board () {
-  const [boardState, dispatch] = useReducer(reducer, null, initialBoardState);
-  if (!boardState.winner && boardState.lastPlayer === PLAYER1) {
-    dispatch({ type: 'move', column: computerMove(boardState.board), player: PLAYER2 });
-  }
+  const [ boardState, dispatch ] = useReducer(reducer, null, initialBoardState);
+  useEffect(() => {
+    if (!boardState.winner && boardState.lastPlayer === PLAYER1) {
+      dispatch({ type: 'move', column: computerMove(boardState.board), player: PLAYER2 });
+    }
+  });
 
   /**
    * Event handler for a click on the board.
