@@ -1,4 +1,11 @@
-# Getting Started with Create React App
+# react-connect-4
+
+Written across two 'hack day's, this connect 4 game contains AI via a minimax
+algorithm (done client side).  See if you can beat the computer
+[here](https://tim-react-connect-4.herokuapp.com/).
+
+
+# Development
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
